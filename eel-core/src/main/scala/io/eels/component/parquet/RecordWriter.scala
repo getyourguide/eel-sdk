@@ -114,7 +114,7 @@ class StructRecordWriter(structType: StructType,
     for (k <- structType.fields.indices) {
       val value = values(k)
       // if a value is null then parquet requires us to completely skip the field
-      if (value != null) {
+      if (value != null && value != None) {
         val field = structType.field(k)
         record.startField(field.name, k)
         val writer = writers(k)
