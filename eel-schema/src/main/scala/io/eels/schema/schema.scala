@@ -315,6 +315,8 @@ object StructType {
         process(tpe.typeArgs(0))
       } else if (tpe <:< typeOf[Product]) {
         struct(tpe)
+      } else if (tpe <:< typeOf[Map[_, _]]) {
+        MapType(process(tpe.typeArgs(0)), process(tpe.typeArgs(1)))
       } else {
         val javaClass = implicitly[TypeTag[T]].mirror.runtimeClass(tpe)
         SchemaFn.toDataType(javaClass)
